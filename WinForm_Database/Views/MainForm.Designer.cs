@@ -30,6 +30,7 @@
         {
             this.btnReadExcel = new System.Windows.Forms.Button();
             this.btnSaveToSQLite = new System.Windows.Forms.Button();
+            this.btnSaveToParquet = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnReadExcel
@@ -52,11 +53,22 @@
             this.btnSaveToSQLite.UseVisualStyleBackColor = true;
             this.btnSaveToSQLite.Click += new System.EventHandler(this.btnSaveToSQLite_Click);
             // 
+            // btnSaveToParquet
+            // 
+            this.btnSaveToParquet.Location = new System.Drawing.Point(13, 113);
+            this.btnSaveToParquet.Name = "btnSaveToParquet";
+            this.btnSaveToParquet.Size = new System.Drawing.Size(129, 23);
+            this.btnSaveToParquet.TabIndex = 2;
+            this.btnSaveToParquet.Text = "Save Data into Parquet";
+            this.btnSaveToParquet.UseVisualStyleBackColor = true;
+            this.btnSaveToParquet.Click += new System.EventHandler(this.btnSaveToParquet_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(325, 353);
+            this.Controls.Add(this.btnSaveToParquet);
             this.Controls.Add(this.btnSaveToSQLite);
             this.Controls.Add(this.btnReadExcel);
             this.Name = "MainForm";
@@ -69,6 +81,7 @@
 
         private System.Windows.Forms.Button btnReadExcel;
         private System.Windows.Forms.Button btnSaveToSQLite;
+        private System.Windows.Forms.Button btnSaveToParquet;
     }
 }
 

@@ -14,13 +14,17 @@ namespace WinForm_Database
 {
     public partial class MainForm: Form
     {
-        private ExcelToSQLiteController _controller;
+        private ExcelReadController _ExcelReadcontroller;
+        private SQLiteSaveController _SQLiteSavecontroller;
+        private ParquetSaveController _ParquetSavecontroller;
         private List<ExcelSheetData> _sheetsData;
 
         public MainForm()
         {
             InitializeComponent();
-            _controller = new ExcelToSQLiteController();
+            _ExcelReadcontroller = new ExcelReadController();
+            _SQLiteSavecontroller = new SQLiteSaveController();
+            _ParquetSavecontroller = new ParquetSaveController();
         }
 
         private void btnReadExcel_Click(object sender, EventArgs e)
@@ -30,7 +34,7 @@ namespace WinForm_Database
                 openFileDialog.Filter = "Excel Files|*.xlsx;*.xls";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    _sheetsData = _controller.ReadExcelFile(openFileDialog.FileName);
+                    _sheetsData = _ExcelReadcontroller.ReadExcelFile(openFileDialog.FileName);
                     MessageBox.Show("Excel file read successfully.");
                 }
             }
@@ -41,8 +45,28 @@ namespace WinForm_Database
             if (_sheetsData != null)
             {
                 var connectionString = "Data Source=AtRiskDatabaseFile.db;Version=3;";
-                _controller.SaveToSQLite(_sheetsData, connectionString);
+                _SQLiteSavecontroller.SaveToSQLite(_sheetsData, connectionString);
                 MessageBox.Show("Data saved to database successfully.");
+            }
+            else
+            {
+                MessageBox.Show("No data to save. Please read an Excel file first.");
+            }
+        }
+
+        private void btnSaveToParquet_Click(object sender, EventArgs e)
+        {
+            if (_sheetsData != null)
+            {
+                using (var saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Parquet Files|*.parquet";
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        _ParquetSavecontroller.SaveToParquet(_sheetsData, saveFileDialog.FileName);
+                        MessageBox.Show("Data saved to Parquet file successfully.");
+                    }
+                }
             }
             else
             {
